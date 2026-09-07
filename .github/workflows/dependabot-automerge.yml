@@ -28,13 +28,13 @@ jobs:
         # When several Dependabot PRs land at once (e.g. a grouped quarkus-platform
         # bump across every module), each merge advances `main` and the others fail
         # with "Base branch was modified. Review and try the merge again."
-        # `--auto` only queues when branch protection requires a check; this repo has
-        # none, so gh merges immediately and races. Retry with jittered backoff to
-        # ride out the race, then fall back to a plain squash merge.
+        # This repo has no branch protection, so `--auto` can't be used: it errors
+        # with "Protected branch rules not configured for this branch". Instead merge
+        # directly and retry with jittered backoff to ride out the base-branch race.
         run: |
           for attempt in $(seq 1 6); do
-            if gh pr merge --squash --auto "$PR_URL"; then
-              echo "Merge succeeded/queued on attempt $attempt"
+            if gh pr merge --squash "$PR_URL"; then
+              echo "Merge succeeded on attempt $attempt"
               exit 0
             fi
             sleep_for=$(( (RANDOM % 15) + 15 ))
