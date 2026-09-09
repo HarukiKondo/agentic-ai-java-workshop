@@ -380,8 +380,6 @@ False alarm, relevance restored after cache refresh
 
 **How to confirm:** UI status stays `OPEN` or changes to `RESOLVED`. Terminal logs show `Incident #6 action: MONITOR` or `Incident #6 action: RESOLVE`. (LLM responses are non-deterministic — the exact action may vary.)
 
-Now press `s` to restart (reset the database), then **reload the browser**.
-
 **Path 2 — Needs triage:**  
 Click **View** on Incident **#5** (email-service/notification-api) and process with:
 
@@ -390,8 +388,6 @@ SMTP timeout for 30% of outbound emails, queue growing
 ```
 
 **How to confirm:** UI status changes to `TRIAGING` or `IN_PROGRESS`. Terminal logs show `TriageTool activated for incident #5` — the supervisor delegated to `TriageAgent`.
-
-Now press `s` to restart (reset the database), then **reload the browser**.
 
 **Path 3 — Critical incident (full supervisor path):**  
 Click **View** on Incident **#1** (payment-gateway/checkout-api, P2) and process with:
