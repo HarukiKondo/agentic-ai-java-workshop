@@ -82,6 +82,8 @@ Expected:
 
     <img src="../../images/ImpactAgent_Topology.png" alt="Full agent topology with ImpactAgent as A2A remote node" style="width:100%;max-width:960px;display:block;margin:1rem auto;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.15);">
 
+    The [Execution History](http://localhost:8080/q/dev-ui/quarkus-langchain4j-agentic/executions){:target="_blank"} page is **empty until you process an incident** — it records runs on demand and is held in memory (so it also clears on restart/hot-reload). You'll come back to it after the **Run it** step below.
+
 ---
 
 ## The A2A architecture (2 min)
