@@ -109,7 +109,7 @@ Do not scan Java files — all context is in AGENTS.md.
 
 **What you should see:** OpenCode confirms that it read `AGENTS.md` and loaded the project context. A concise response like this is expected:
 
-> Read. Ready for your question — context loaded: `@Agent` interface model, 7 agents, 2 workflows, domain model, endpoints, and all 10 project rules.
+> Done — I've read `lab/AGENTS.md`. Context loaded: the `@Agent` interface model, all 10 project rules, the domain model (`IncidentInfo`, `IncidentStatus`, `IncidentAction`, `AnalysisTask`, `IncidentAnalysisResults`, `IncidentOutcome`), the 3 API endpoints, the 8 seeded incidents, and the agent/workflow tables. Ready for your question.
 
 Exact wording and detail may vary; OpenCode does not need to enumerate every agent or rule at this stage.
 
