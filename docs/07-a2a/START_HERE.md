@@ -78,7 +78,7 @@ Expected:
 
     <img src="../../images/ImpactAgent.png" alt="ImpactAgent shown as A2AClientAgent in Dev UI" style="width:100%;max-width:960px;display:block;margin:1rem auto;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.15);">
 
-    Check the [topology](http://localhost:8080/q/dev-ui/quarkus-langchain4j-agentic/topology){:target="_blank"} — this is the final evolution of the agent tree. Compare it to Exercise 4: `ImpactAgent` is still wired into the same workflow, but execution now happens in a separate JVM on port 8888.
+    Check the [topology](http://localhost:8080/q/dev-ui/quarkus-langchain4j-agentic/topology){:target="_blank"} — this is the final evolution of the agent tree. Use the **selector dropdown at the top-left** to pick **`IncidentProcessingWorkflow`** (the root) to see the full tree. If the page shows a single isolated node like `IncidentLogAnalysisAgent`, that's a standalone agent not yet wired into a workflow (it's the optional multimodal bonus below) — just switch the selector to `IncidentProcessingWorkflow`. Compare it to Exercise 4: `ImpactAgent` is still wired into the same workflow, but execution now happens in a separate JVM on port 8888.
 
     <img src="../../images/ImpactAgent_Topology.png" alt="Full agent topology with ImpactAgent as A2A remote node" style="width:100%;max-width:960px;display:block;margin:1rem auto;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.15);">
 
