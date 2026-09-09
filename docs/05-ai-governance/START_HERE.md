@@ -164,15 +164,17 @@ If you completed Exercises 1–4 in `lab/`, OpenCode should produce an audit tab
 
 If you used the solution directories and left `lab/` untouched, OpenCode should challenge the premise and report the TODO stubs instead:
 
-| File | Expected finding |
-|------|------------------|
-| `TriageAgent.java` | Method present; Exercise 1 annotations are TODO |
-| `DiagnosticAgent.java` | Method present; Exercise 2 annotations are TODO |
-| `IncidentAnalysisAgent.java` | Method present; Exercise 3 annotations are TODO |
-| `ImpactAgent.java` | Exercise 4 implementation is TODO |
-| `EscalationAgent.java` | Exercise 4 implementation is TODO |
-| `ResolutionAgent.java` | Exercise 4 implementation is TODO |
-| `IncidentSupervisorAgent.java` | `@SupervisorAgent` and `@SupervisorRequest` are TODO |
+> Audit complete. All 7 agent interfaces exist but every one is a TODO stub — zero annotations applied.
+
+| # | Interface | File exists | Method | `@Agent` | outputKey | description | Status |
+|---|-----------|:-----------:|--------|:--------:|-----------|-------------|--------|
+| 1 | TriageAgent | ✓ | `processTriage(IncidentInfo, Integer, String)` | ✗ | — | — | Stub — only `@ToolBox(TriageTool.class)` import present, unused |
+| 2 | DiagnosticAgent | ✓ | `processDiagnostic(IncidentInfo, Integer, String)` | ✗ | — | — | Stub |
+| 3 | IncidentAnalysisAgent | ✓ | `analyzeIncident(AnalysisTask, IncidentInfo, Integer, String)` | ✗ | — | — | Stub |
+| 4 | ImpactAgent | ✓ | none | ✗ | — | — | Empty interface |
+| 5 | EscalationAgent | ✓ | none | ✗ | — | — | Empty interface |
+| 6 | ResolutionAgent | ✓ | none | ✗ | — | — | Empty interface |
+| 7 | IncidentSupervisorAgent | ✓ | none | ✗ (no `@SupervisorAgent`/`@SupervisorRequest` either) | — | — | Empty interface |
 
 In that state, the `outputKey` values in `AGENTS.md` describe the target state and cannot yet be verified from `lab/` code. OpenCode may also correctly flag documentation gaps such as `TriageWorkflow` being absent from the workflows table or `MonitoredAgent` not being explained.
 
