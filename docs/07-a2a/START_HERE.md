@@ -82,7 +82,7 @@ Expected:
 
     <img src="../../images/ImpactAgent_Topology.png" alt="Full agent topology with ImpactAgent as A2A remote node" style="width:100%;max-width:960px;display:block;margin:1rem auto;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.15);">
 
-    The [Execution History](http://localhost:8080/q/dev-ui/quarkus-langchain4j-agentic/executions){:target="_blank"} page is **empty until you process an incident** — it records runs on demand and is held in memory (so it also clears on restart/hot-reload). You'll come back to it after the **Run it** step below.
+    To inspect a run's execution tree, use the app's own report at **[http://localhost:8080/incident-management/report](http://localhost:8080/incident-management/report){:target="_blank"}** — it's built from the workflow's `agentMonitor()` and is **empty until you process an incident** (and held in memory, so it clears on restart/hot-reload). You'll come back to it after the **Run it** step below. (The Agentic Dev UI's own *Execution History* page can render empty in this quarkus-langchain4j version — use the app report instead.)
 
 ---
 
@@ -143,11 +143,14 @@ Open **[http://localhost:8080](http://localhost:8080){:target="_blank"}**, click
 Complete service outage, all API endpoints returning 503, cascading failures across dependent services
 ```
 
-**How to confirm:** The HITL approval modal will appear — click **Escalate to Management** to continue the workflow. Check the UI for the final incident status (should reach `ESCALATED`). Then open the [Agentic Dev UI — Execution History](http://localhost:8080/q/dev-ui/quarkus-langchain4j-agentic/executions){:target="_blank"} to see the full workflow tree:
+**How to confirm:** The HITL approval modal will appear — click **Escalate to Management** to continue the workflow. Check the UI for the final incident status (should reach `ESCALATED`). Then open the app's execution report at **[http://localhost:8080/incident-management/report](http://localhost:8080/incident-management/report){:target="_blank"}** to see the full workflow tree:
 
-<img src="../../images/agentic-devui-execution.png" alt="Agentic Dev UI execution history showing the full agent workflow" style="width:100%;max-width:960px;display:block;margin:1rem auto;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.15);">
+<img src="../../images/agentic-devui-execution.png" alt="Execution report showing the full agent workflow tree" style="width:100%;max-width:960px;display:block;margin:1rem auto;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.15);">
 
 Notice the execution tree: `processIncident` (SEQUENCE) → `analyzeIncident` (PARALLEL, 3 analysis agents) → `superviseIncidentProcessing` (SEQUENCE with `impact-agent`, `processEscalation`) → `createEscalationProposal` → `analyzeForResolution`. Each row shows duration, token count, input, and output.
+
+!!! note "Dev UI Execution History may be empty"
+    The Agentic Dev UI's built-in *Execution History* page (`/q/dev-ui/quarkus-langchain4j-agentic/executions`) can render empty in this quarkus-langchain4j version even after a successful run. The app's `/incident-management/report` endpoint above is the reliable view — it renders the same tree from the workflow's `agentMonitor()`.
 
 Also correlate logs across **both** terminal windows:
 
@@ -287,7 +290,7 @@ A ready-made sample screenshot ships with the project — a mock observability c
 2. Click **Choose File** and select `solutions/07-a2a/multi-agent-system/sample-data/checkout-api-503-incident.png`.
 3. Leave the report box **empty** (or add a short note) and process the incident.
 
-**How to confirm:** In the [Execution History](http://localhost:8080/q/dev-ui/quarkus-langchain4j-agentic/executions){:target="_blank"}, the tree now starts with `analyzeIncidentLogs`, and its output `report` contains details that only appear in the image — HikariCP connection-pool exhaustion (50/50, 128 waiting), upstream `payment-processor` timeouts, and the circuit breaker in `OPEN` state. Those observations then flow into severity/impact analysis and the escalation decision.
+**How to confirm:** In the [execution report](http://localhost:8080/incident-management/report){:target="_blank"}, the tree now starts with `analyzeIncidentLogs`, and its output `report` contains details that only appear in the image — HikariCP connection-pool exhaustion (50/50, 128 waiting), upstream `payment-processor` timeouts, and the circuit breaker in `OPEN` state. Those observations then flow into severity/impact analysis and the escalation decision.
 
 !!! tip "Compare with and without the image"
     Process once with no file and once with the screenshot. Same incident, but the enriched run gives the downstream agents far more to reason about — that's the multimodal payoff.
