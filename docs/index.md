@@ -18,7 +18,7 @@ Confirm these before the workshop starts:
 | Requirement | Check |
 |-------------|-------|
 | **[Java 25+](#install-java-25)** | `java -version` and `javac -version` |
-| Maven 3.9+ | or use `./mvnw` in each exercise |
+| **[Maven 3.9+](#install-maven-39)** | `mvn -version`, or use `./mvnw` in each exercise |
 | Quarkus | `./mvnw quarkus:dev` |
 | [OpenCode CLI](https://opencode.ai/){:target="_blank"} or any AGENTS.md-compatible AI assistant | Install and configure before the workshop |
 | LLM API key | `OPENAI_API_KEY` (OpenAI, Anthropic, or compatible provider) |
@@ -75,6 +75,46 @@ javac -version
 ```
 
 Both should report **25** (or a newer version). After cloning the repository below, run `./mvnw -version` from `lab/` and check that Maven also reports **Java version: 25** or newer (`.\mvnw.cmd -version` in Windows PowerShell). If Maven reports an older Java version, update `JAVA_HOME` to the JDK installation directory and put its `bin` directory first in `PATH`. Set your IDE's project JDK and Maven runner JDK to the same version.
+
+### Install Maven 3.9+
+
+Install [Java 25](#install-java-25) first, then choose an installation method below. See the [official Apache Maven installation guide](https://maven.apache.org/install.html){:target="_blank"} for more options.
+
+!!! tip "Maven Wrapper — no separate Maven installation needed"
+    The workshop projects include `mvnw` and `mvnw.cmd`. After cloning the repository, run `./mvnw -version` from `lab/` (or `.\mvnw.cmd -version` in Windows PowerShell). The wrapper downloads and uses the Maven version configured for that project; its first run requires internet access. The exercise commands already use the wrapper. A JDK is still required.
+
+=== "macOS — Homebrew"
+
+    With [Homebrew](https://brew.sh/){:target="_blank"} installed:
+
+    ```bash
+    brew install maven
+    mvn -version
+    ```
+
+=== "Linux / WSL — SDKMAN!"
+
+    After installing SDKMAN! as shown in the [Java setup](#install-java-25):
+
+    ```bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk install maven
+    mvn -version
+    ```
+
+    Accept the prompt to make Maven the default. If Maven is already installed through SDKMAN!, use `sdk list maven` to choose a stable **3.9.x** release and select it with `sdk install maven VERSION`, `sdk use maven VERSION`, and `sdk default maven VERSION`, replacing `VERSION` with the version from the list. Run these commands inside WSL if that is your workshop environment.
+
+=== "Windows — binary ZIP"
+
+    1. Download the latest stable **Maven 3.9.x Binary zip archive** from [Apache Maven downloads](https://maven.apache.org/download.cgi){:target="_blank"}.
+    2. Extract it to a permanent folder, such as `C:\Tools`. Add the extracted Maven folder's **`bin` directory** to your user **Path** using **Edit environment variables for your account**. For example, Maven 3.9.16 would use `C:\Tools\apache-maven-3.9.16\bin`; use the version you actually extracted.
+    3. Keep `JAVA_HOME` pointing to your **JDK 25** installation. Open a new PowerShell window and run:
+
+        ```powershell
+        mvn -version
+        ```
+
+Check that the output reports **Apache Maven 3.9 or newer** and **Java version: 25 or newer**. If `mvn` is not found, check Maven's `bin` entry in `PATH` and reopen the terminal. If the Java version is older, correct `JAVA_HOME` using the Java instructions above. Your globally installed `mvn` and a project's `./mvnw` can use different Maven versions; verify the command you plan to run.
 
 ## Get the code
 
