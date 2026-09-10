@@ -8,16 +8,25 @@ import com.incidentmanagement.model.AnalysisTask;
 import dev.langchain4j.agentic.declarative.Output;
 import dev.langchain4j.agentic.declarative.SequenceAgent;
 import io.quarkus.logging.Log;
+import dev.langchain4j.agentic.observability.MonitoredAgent;
 
 import java.util.List;
 
 // TODO Exercise 4 — Step 5: Add "extends MonitoredAgent" — See docs/04-supervisor/START_HERE.md
-public interface IncidentProcessingWorkflow {
+public interface IncidentProcessingWorkflow extends MonitoredAgent{
 
-    // TODO Exercise 4 — Step 5a: Add @SequenceAgent annotation — See docs/04-supervisor/START_HERE.md
+    @SequenceAgent(outputKey = "incidentProcessingAgentResult",
+        subAgents = { IncidentAnalysisWorkflow.class,
+                      IncidentSupervisorAgent.class,
+                      ResolutionAgent.class })
     IncidentOutcome processIncident(List<AnalysisTask> tasks, IncidentInfo incidentInfo,
                                      Integer incidentNumber, String report);
 
-    // TODO Exercise 4 — Step 5b: @Output static method — See docs/04-supervisor/START_HERE.md
+    @Output
+    static IncidentOutcome output(IncidentOutcome incidentOutcome) {
+        Log.debug("IncidentOutcome: " + incidentOutcome.resolution()
+                + " → " + incidentOutcome.incidentAction());
+        return incidentOutcome;
+    }
 
 }

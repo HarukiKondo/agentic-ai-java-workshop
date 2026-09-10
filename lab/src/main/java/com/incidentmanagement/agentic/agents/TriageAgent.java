@@ -32,6 +32,6 @@ public interface TriageAgent {
         outputKey = "analysisResult")
 
     @ToolBox(TriageTool.class)
-    String processTriage(IncidentInfo incidentInfo, Integer incidentNumber, String report);
-
+    String processTriage(IncidentInfo incidentInfo, Integer incidentNumber,
+                     String triageReport);
 }

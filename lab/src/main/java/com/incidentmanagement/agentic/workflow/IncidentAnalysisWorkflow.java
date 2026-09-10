@@ -12,8 +12,24 @@ import java.util.List;
 
 public interface IncidentAnalysisWorkflow {
 
-    // TODO Exercise 3 — Step 2a: @ParallelMapperAgent method — See docs/03-parallel-workflow/START_HERE.md
+    @ParallelMapperAgent(
+        description = "Analyzes incident reports in parallel for severity, impact, and resolution needs",
+        outputKey = "incidentAnalysisResults",
+        subAgent = IncidentAnalysisAgent.class,
+        itemsProvider = "tasks")
+    IncidentAnalysisResults analyzeIncident(List<AnalysisTask> tasks,
+                                            IncidentInfo incidentInfo,
+                                            Integer incidentNumber,
+                                            String report);
 
-    // TODO Exercise 3 — Step 2b: @Output static method — See docs/03-parallel-workflow/START_HERE.md
+    @Output
+    static IncidentAnalysisResults output(AgenticScope scope,
+                                        List<String> incidentAnalysisResults) {
+        return new IncidentAnalysisResults(
+                incidentAnalysisResults.get(0),  // severityAnalysis
+                incidentAnalysisResults.get(1),  // impactAnalysis
+                incidentAnalysisResults.get(2)   // resolutionAnalysis
+        );
+    }
 
 }
