@@ -17,13 +17,64 @@ Confirm these before the workshop starts:
 
 | Requirement | Check |
 |-------------|-------|
-| **Java 25+** | `java -version` |
+| **[Java 25+](#install-java-25)** | `java -version` and `javac -version` |
 | Maven 3.9+ | or use `./mvnw` in each exercise |
 | Quarkus | `./mvnw quarkus:dev` |
 | [OpenCode CLI](https://opencode.ai/){:target="_blank"} or any AGENTS.md-compatible AI assistant | Install and configure before the workshop |
 | LLM API key | `OPENAI_API_KEY` (OpenAI, Anthropic, or compatible provider) |
 | Free ports **8080**, **8888** | One process per exercise set |
 | Docker or Podman | For Quarkus Dev Services (PostgreSQL, LGTM) |
+
+### Install Java 25
+
+Install a **JDK 25** so you have both the Java runtime and compiler. [Eclipse Temurin 25](https://adoptium.net/temurin/releases/?version=25){:target="_blank"} provides packages for different operating systems and CPU architectures; choose the latest available Java 25 patch release.
+
+=== "macOS — Homebrew"
+
+    With [Homebrew](https://brew.sh/){:target="_blank"} installed, install [Temurin 25](https://formulae.brew.sh/cask/temurin@25){:target="_blank"} and select it for the current terminal:
+
+    ```bash
+    brew install --cask temurin@25
+    export JAVA_HOME=$(/usr/libexec/java_home -v 25)
+    export PATH="$JAVA_HOME/bin:$PATH"
+    ```
+
+    Add the two `export` lines to `~/.zshrc` to keep this selection in new Zsh terminals. If you use Bash, add them to your Bash startup file instead.
+
+=== "Linux / WSL — SDKMAN!"
+
+    Install [SDKMAN!](https://sdkman.io/install/){:target="_blank"} in Bash or Zsh (skip the first command if it is already installed):
+
+    ```bash
+    curl -s "https://get.sdkman.io" | bash
+    source "$HOME/.sdkman/bin/sdkman-init.sh"
+    sdk list java
+    ```
+
+    In the list, find the latest stable **Java 25** entry under **Temurin** and copy its full **Identifier** ending in `-tem`. Press `q` to exit the list. Replace `JAVA_25_IDENTIFIER` below with that identifier, then run:
+
+    ```bash
+    sdk install java JAVA_25_IDENTIFIER
+    sdk use java JAVA_25_IDENTIFIER
+    sdk default java JAVA_25_IDENTIFIER
+    ```
+
+    SDKMAN! sets `JAVA_HOME` and `PATH`; `sdk use` selects the JDK in this terminal, and `sdk default` selects it for new terminals. See the [SDKMAN! usage guide](https://sdkman.io/usage/){:target="_blank"}. For WSL, install the JDK inside WSL and run the workshop commands there.
+
+=== "Windows — installer"
+
+    Download the **Windows JDK 25 MSI installer** from [Eclipse Temurin](https://adoptium.net/temurin/releases/?version=25){:target="_blank"}. Run it and, on **Custom Setup**, enable both **Add to PATH** and **Set JAVA_HOME**. Finish installation, then reopen your terminal and IDE so they pick up the new environment. See the [official Windows installation guide](https://adoptium.net/installation/windows/){:target="_blank"}.
+
+    If you use WSL for the workshop, follow the **Linux / WSL** tab instead.
+
+Verify the selected JDK in the terminal you will use for the workshop:
+
+```bash
+java -version
+javac -version
+```
+
+Both should report **25** (or a newer version). After cloning the repository below, run `./mvnw -version` from `lab/` and check that Maven also reports **Java version: 25** or newer (`.\mvnw.cmd -version` in Windows PowerShell). If Maven reports an older Java version, update `JAVA_HOME` to the JDK installation directory and put its `bin` directory first in `PATH`. Set your IDE's project JDK and Maven runner JDK to the same version.
 
 ## Get the code
 
