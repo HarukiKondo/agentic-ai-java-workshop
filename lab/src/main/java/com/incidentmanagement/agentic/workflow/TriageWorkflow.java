@@ -10,13 +10,16 @@ import dev.langchain4j.agentic.declarative.SequenceAgent;
  */
 public interface TriageWorkflow {
 
+    // Sequence agent that coordinates the triage process using the TriageAgent
+    @SequenceAgent(outputKey = "triageResult", subAgents = { TriageAgent.class })
+
     // TODO Exercise 1 — Step 1b: Add @SequenceAgent annotation — See docs/01-first-agent/START_HERE.md
     String processTriage(
             IncidentInfo incidentInfo,
             Integer incidentNumber,
             String report);
 
-    // TODO Exercise 1 — Step 1b: Add @Output annotation — See docs/01-first-agent/START_HERE.md
+    @Output()
     static String output(String analysisResult) {
         return analysisResult;
     }

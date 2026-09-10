@@ -12,6 +12,46 @@ import com.incidentmanagement.model.IncidentStatus;
 @ApplicationScoped
 public class TriageTool {
 
-    // TODO Exercise 1 — Step 2: See docs/01-first-agent/START_HERE.md
+    /**
+     * トリアージを要求するツール
+     */
+    @Tool("Requests initial triage with the specified options")
+    @Transactional
+    public String requestTriage(
+        Integer incidentNumber,
+        String system,
+        String service,
+        Integer priority,
+        boolean assignOnCall,
+        boolean notifyStakeholders,
+        boolean createWarRoom,
+        boolean linkRelatedIncidents,
+        String triageNotes) 
+    {
+
+        // インシデント番号からインシデントを取得する
+        IncidentInfo incidentInfo = IncidentInfo.findById(incidentNumber);
+
+        if (incidentInfo != null) {
+            incidentInfo.status = IncidentStatus.TRIAGING;
+            incidentInfo.persist();
+        }
+
+        StringBuilder summary = new StringBuilder();
+
+        summary.append("Triage requested for ").append(system).append("/")
+            .append(service).append(" (P").append(priority).append("), Incident #")
+            .append(incidentNumber).append(":\n");
+            
+        if (assignOnCall)        summary.append("- Assign on-call engineer\n");
+        if (notifyStakeholders)  summary.append("- Notify stakeholders\n");
+        if (createWarRoom)       summary.append("- Create war room\n");
+        if (linkRelatedIncidents) summary.append("- Link related incidents\n");
+        if (triageNotes != null && !triageNotes.isEmpty())
+            summary.append("Notes: ").append(triageNotes);
+
+        Log.info("  └─ TriageTool activated for incident #" + incidentNumber);
+        return summary.toString();
+    }
 
 }
