@@ -10,9 +10,6 @@ import dev.langchain4j.service.UserMessage;
 
 public interface TriageAgent {
 
-    // TODO Exercise 1 — Step 1: Add @SystemMessage, @UserMessage, @Agent, and @ToolBox annotations — See docs/01-first-agent/START_HERE.md
-    String processTriage(IncidentInfo incidentInfo, Integer incidentNumber, String report);
-
     @SystemMessage("""
         You handle intake for the triage department of an IT incident management system.
         It is your job to submit a request to the provided requestTriage function
@@ -35,6 +32,6 @@ public interface TriageAgent {
         outputKey = "analysisResult")
 
     @ToolBox(TriageTool.class)
+    String processTriage(IncidentInfo incidentInfo, Integer incidentNumber, String report);
 
-    
 }
